@@ -1,0 +1,41 @@
+@use 'utils';
+@use 'variables' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;1,500;1,700&family=Playfair+Display:wght@900&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &::selection {
+    background-color: $green;
+    color: $white;
+  }
+}
+
+html {
+  font-size: 10px;
+
+  body {
+    background-color: $white;
+    color: $black;
+    font-family: $font-text, -apple-system, BlinkMacSystemFont, serif;
+    font-size: 1.6rem;
+    font-weight: $regular;
+    overflow-y: scroll;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: $font-title;
+      font-weight: $bold;
+    }
+
+    p {
+      font-weight: $italic-regular;
+      font-style: italic;
+    }
+  }
+}
