@@ -1,0 +1,42 @@
+@import 'styles/mixin';
+@import 'styles/variables';
+
+$time: 0.5s;
+
+.container {
+  background-color: $white;
+  bottom: -100%;
+  width: 100vw;
+  position: fixed;
+  z-index: 999;
+
+  &.up {
+    animation: overlay $time cubic-bezier(0.99, 0.02, 0.7, 1) forwards;
+  }
+
+  &.upMore {
+    animation: overlay-more $time cubic-bezier(0.99, 0.02, 0.7, 1) forwards;
+  }
+}
+
+@keyframes overlay {
+  0% {
+    bottom: 0;
+    height: 0;
+  }
+  100% {
+    bottom: 0;
+    height: 100vh;
+  }
+}
+
+@keyframes overlay-more {
+  0% {
+    bottom: 0;
+    height: 100vh;
+  }
+  100% {
+    bottom: 110vh;
+    height: 100vh;
+  }
+}

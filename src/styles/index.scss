@@ -1,8 +1,8 @@
 @use 'utils';
+@use 'mixin' as *;
 @use 'variables' as *;
 
-@import url('https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;1,500;1,700&family=Playfair+Display:wght@900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500;800&family=Luckiest+Guy&display=swap');
 
 * {
   box-sizing: border-box;
@@ -16,26 +16,34 @@
 }
 
 html {
-  font-size: 10px;
+  font-size: 8px;
 
   body {
     background-color: $white;
     color: $black;
-    font-family: $font-text, -apple-system, BlinkMacSystemFont, serif;
+    font-family: $font-text, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 1.6rem;
     font-weight: $regular;
     overflow-y: scroll;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: $font-title;
       font-weight: $bold;
     }
+  }
 
-    p {
-      font-weight: $italic-regular;
-      font-style: italic;
-    }
+  @include from-tablet {
+    font-size: 9px;
+  }
+
+  @include from-desktop {
+    font-size: 10px;
   }
 }
