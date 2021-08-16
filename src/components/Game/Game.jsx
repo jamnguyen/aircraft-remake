@@ -1,13 +1,10 @@
 import React from 'react';
-import { useScreenManager } from '../../reducers/hooks';
 import { SCREEN_NAME } from '../../reducers/screen-manager';
-import Login from '../Login/Login';
-import MainMenu from '../MainMenu/MainMenu';
-import Splash from '../Splash/Splash';
+import { Login, MainMenu, Splash } from '../../screens';
+import { useScreenManager } from '../../utils/hooks';
 
 const Game = () => {
   const { screen } = useScreenManager();
-
   switch (screen) {
     case SCREEN_NAME.SPLASH:
       return <Splash />;

@@ -1,0 +1,32 @@
+@import 'styles/mixin';
+@import 'styles/variables';
+
+.container {
+  @include full-page($darksky);
+  padding-bottom: 10rem;
+
+  h1 {
+    color: $white;
+    font-family: $font-special;
+    font-size: 5rem;
+    font-weight: $regular;
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+  }
+
+  .button {
+    background-color: $white;
+    border-radius: 6rem;
+    color: $darksky;
+    font-weight: $bold;
+    width: 80%;
+
+    &:not(:last-child) {
+      margin-bottom: 1.4rem;
+    }
+
+    &:focus {
+      border-color: $sky;
+    }
+  }
+}

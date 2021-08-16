@@ -1,7 +1,7 @@
 import React from 'react';
 import { APP_NAME, SPLASH_TIME } from '../../app-config';
-import { useDispatch } from '../../reducers/hooks';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
+import { useDispatch } from '../../utils/hooks';
 import styles from './Splash.module.scss';
 
 const Splash = () => {

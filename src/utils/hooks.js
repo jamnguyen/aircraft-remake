@@ -1,5 +1,6 @@
-import { useStore } from "./store-provider"
+import { useStore } from "../reducers/store-provider"
 
+// SCREENS
 export const useDispatch = () => {
   const [, dispatch] = useStore();
 
@@ -10,3 +11,10 @@ export const useScreenManager = () => {
 
   return store.screen;
 };
+
+// GAME
+export const useGame = () => {
+  const [store] = useStore();
+
+  return store.game;
+}

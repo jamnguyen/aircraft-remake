@@ -1,0 +1,15 @@
+@import 'styles/variables';
+
+.input {
+  background-color: $white;
+  border: 0.3rem solid transparent;
+  border-radius: 0.4rem;
+  font-size: 1.8rem;
+  padding: 1.4rem 1.8rem;
+  transition: 0.3s all ease;
+
+  &:focus {
+    border-color: $red;
+    outline: none;
+  }
+}

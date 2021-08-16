@@ -2,13 +2,13 @@
 @import 'styles/variables';
 
 .container {
-  @include full-page(linear-gradient(to bottom right, $sky, $darksky));
+  @include full-page($darksky);
 
   h1 {
-    @include fade-scale-up(0.6s);
+    @include fade-move-up(0.6s);
     color: $white;
     font-family: $font-special;
-    font-size: 8rem;
+    font-size: 7rem;
     font-weight: $regular;
     letter-spacing: 0.3rem;
     margin-bottom: 4rem;

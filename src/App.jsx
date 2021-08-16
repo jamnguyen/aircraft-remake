@@ -1,6 +1,6 @@
 import React from 'react';
 import { Game, Loader } from './components';
-import { useScreenManager } from './reducers/hooks';
+import { useScreenManager } from './utils/hooks';
 
 function App() {
   const { isLoading } = useScreenManager();

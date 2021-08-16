@@ -1,4 +1,5 @@
 import React from 'react';
+import { initialState as gameInitState, GameReducer } from './game';
 import { initialState as screenInitState, ScreenReducer } from './screen-manager';
 
 const combineReducers = (reducerObj) => (state, action) =>
@@ -11,13 +12,17 @@ const combineReducers = (reducerObj) => (state, action) =>
   );
 
 const initialState = {
+  game: gameInitState,
   screen: screenInitState,
 }
 
 export const StoreContext = React.createContext();
 
 
-const rootReducer = combineReducers({ screen: ScreenReducer })
+const rootReducer = combineReducers({
+  game: GameReducer,
+  screen: ScreenReducer,
+});
 
 export const StoreProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(rootReducer, initialState);

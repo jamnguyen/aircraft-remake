@@ -27,9 +27,13 @@
   background: $background;
   min-height: 100vh;
   width: 100vw;
+  padding: 6rem;
 }
 
 // ANIMATION
+@mixin fade-move-up($time: 0.4s) {
+  animation: fade $time ease-in-out, move-up $time ease-in-out;
+}
 @mixin fade-scale-up($time: 0.4s) {
   animation: fade $time ease-in-out, scale-up $time ease-in-out;
 }
@@ -48,5 +52,13 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+@keyframes move-up {
+  0% {
+    transform: translateY(1rem);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
