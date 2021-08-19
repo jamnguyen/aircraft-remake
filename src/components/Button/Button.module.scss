@@ -1,10 +1,11 @@
 @import 'styles/variables';
 
 .button {
-  background-color: $darksky;
-  border: 0.3rem solid transparent;
+  background-color: $blue;
+  border: none;
   border-radius: 0.4rem;
   color: $white;
+  cursor: pointer;
   font-size: 2.2rem;
   font-weight: $semi-bold;
   padding: 1.4rem 1.8rem;
@@ -15,8 +16,13 @@
     color: $white;
   }
 
+  &:hover,
   &:focus {
-    border-color: $black;
+    background-color: $darksky;
     outline: none;
+  }
+
+  &:disabled {
+    background-color: $silver;
   }
 }

@@ -2,31 +2,30 @@
 @import 'styles/variables';
 
 .container {
-  @include full-page($lightgray);
+  @include full-page(linear-gradient(to bottom left, $smokewhite, $silver));
   align-items: flex-start;
   padding-bottom: 10rem;
 
   h1 {
-    color: $darksky;
+    color: $darkblue;
     font-size: 5rem;
     text-transform: uppercase;
   }
 
   .input {
-    color: $darkgreen;
+    color: $darkblue;
     font-size: 2.2rem;
     font-weight: $semi-bold;
     margin-top: 2rem;
     width: 100%;
 
     &:focus {
-      border-color: $black;
+      border-color: $blue;
     }
   }
 
   .button {
     align-self: flex-end;
-    background-color: $darksky;
     font-size: 2.2rem;
     margin-top: 2rem;
     width: 18rem;
@@ -35,10 +34,6 @@
       font-size: 2rem;
       margin-left: 1rem;
       transform: translateY(0.2rem);
-    }
-
-    &:disabled {
-      background-color: $gray;
     }
   }
 }
