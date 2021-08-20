@@ -6,8 +6,6 @@
 
 * {
   box-sizing: border-box;
-  color: $black;
-  font-family: $font-text, -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
 
@@ -22,6 +20,8 @@ html {
 
   body {
     background-color: $white;
+    color: $black;
+    font-family: $font-text, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 1.6rem;
     font-weight: $regular;
     overflow: hidden;
@@ -36,6 +36,10 @@ html {
     h6 {
       font-family: $font-title;
       font-weight: $bold;
+    }
+
+    ol li {
+      list-style: none;
     }
   }
 

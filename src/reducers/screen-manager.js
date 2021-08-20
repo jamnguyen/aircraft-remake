@@ -1,4 +1,4 @@
-import { SCREEN_TRANSITION_TIME } from "../app-config";
+import { SCREEN_TRANSITION_DELAY } from "../app-config";
 
 const ACTION__SCREEN__SET_SCREEN = 'ACTION__SCREEN__SET_SCREEN';
 const ACTION__SCREEN__SET_LOADING = 'ACTION__LOADING__SET_SCREEN';
@@ -16,10 +16,10 @@ export const SCREEN_NAME = {
 
 export const initialState = {
   isLoading: false,
-  screen: SCREEN_NAME.MAIN_MENU,
+  screen: SCREEN_NAME.SPLASH,
 };
 
-export const setScreen = (dispatch, screenName, delay = SCREEN_TRANSITION_TIME) => {
+export const setScreen = (dispatch, screenName, delay = SCREEN_TRANSITION_DELAY) => {
   if (delay) {
     setTimeout(() => {
       dispatch({ type: ACTION__SCREEN__SET_SCREEN, payload: screenName });

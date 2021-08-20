@@ -4,16 +4,17 @@
   background-color: $blue;
   border: none;
   border-radius: 0.4rem;
-  color: $white;
   cursor: pointer;
+  font-family: $font-text;
   font-size: 2.2rem;
   font-weight: $semi-bold;
   padding: 1.4rem 1.8rem;
   text-transform: uppercase;
-  transition: 0.3s all ease;
 
+  &,
   * {
     color: $white;
+    transition: 0.3s all ease;
   }
 
   &:hover,

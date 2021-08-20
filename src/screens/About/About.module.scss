@@ -39,5 +39,13 @@
       margin-right: 1rem;
       transform: translateY(0.2rem);
     }
+
+    &:hover,
+    &:focus {
+      &,
+      * {
+        color: $darkblue;
+      }
+    }
   }
 }

@@ -25,6 +25,7 @@ const MainMenu = () => {
       >
         <Button
           className={styles.button}
+          onClick={() => navigate(SCREEN_NAME.GAME_LOUNGE)}
         >Play</Button>
         <p>as {username}</p>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SCREEN_NAME } from '../../reducers/screen-manager';
-import { About, Login, MainMenu, Splash } from '../../screens';
+import { About, GameLounge, Login, MainMenu, Splash } from '../../screens';
 import { useScreenManager } from '../../utils/hooks';
 
 const Game = () => {
@@ -15,6 +15,8 @@ const Game = () => {
       return <MainMenu />;
     case SCREEN_NAME.ABOUT:
       return <About />;
+    case SCREEN_NAME.GAME_LOUNGE:
+      return <GameLounge />;
     default:
       return null;
   }

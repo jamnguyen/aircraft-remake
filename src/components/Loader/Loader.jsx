@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './Loader.module.scss';
+import { SCREEN_TRANSITION_TIME } from '../../app-config';
 
 const Loader = ({ show }) => {
   const [className, setClassName] = React.useState();
@@ -13,7 +14,7 @@ const Loader = ({ show }) => {
     } else if (className) {
       timer.current = setTimeout(() => {
         setClassName(styles.upMore);
-      }, 1000);
+      }, SCREEN_TRANSITION_TIME);
     }
   }, [show]);
 

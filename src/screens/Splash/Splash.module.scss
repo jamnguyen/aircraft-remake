@@ -2,7 +2,7 @@
 @import 'styles/variables';
 
 .container {
-  @include full-page($darksky);
+  @include full-page(linear-gradient(to bottom, $darksky, $darkblue));
 
   h1 {
     @include fade-move-up(0.6s);
@@ -12,5 +12,6 @@
     font-weight: $regular;
     letter-spacing: 0.3rem;
     margin-bottom: 4rem;
+    user-select: none;
   }
 }
