@@ -8,7 +8,7 @@ const Game = () => {
   switch (screen) {
     case SCREEN_NAME.SPLASH:
       return <Splash />;
-    case SCREEN_NAME.CHANGE_NAME:
+    case SCREEN_NAME.RENAME:
     case SCREEN_NAME.LOGIN:
       return <Login />;
     case SCREEN_NAME.MAIN_MENU:

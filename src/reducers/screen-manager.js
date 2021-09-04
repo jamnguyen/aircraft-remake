@@ -6,7 +6,7 @@ const ACTION__SCREEN__SET_LOADING = 'ACTION__LOADING__SET_SCREEN';
 export const SCREEN_NAME = {
   SPLASH: 'SPLASH',
   LOGIN: 'LOGIN',
-  CHANGE_NAME: 'CHANGE_NAME',
+  RENAME: 'RENAME',
   MAIN_MENU: 'MAIN_MENU',
   ABOUT: 'ABOUT',
 
@@ -16,7 +16,7 @@ export const SCREEN_NAME = {
 
 export const initialState = {
   isLoading: false,
-  screen: SCREEN_NAME.SPLASH,
+  screen: SCREEN_NAME.LOGIN,
 };
 
 export const setScreen = (dispatch, screenName, delay = SCREEN_TRANSITION_DELAY) => {

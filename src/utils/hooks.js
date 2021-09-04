@@ -18,3 +18,10 @@ export const useGame = () => {
 
   return store.game;
 }
+
+// AUTH
+export const useAuth = () => {
+  const [store] = useStore();
+
+  return store.auth;
+}

@@ -1,15 +1,17 @@
 import React from 'react';
 import { Button } from '../../components';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
-import { useDispatch, useGame } from '../../utils/hooks';
+import { useDispatch, useAuth } from '../../utils/hooks';
 import styles from './MainMenu.module.scss';
 
 const MainMenu = () => {
-  const { username } = useGame();
+  const { username } = useAuth();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     setLoading(dispatch, false);
+
+    console.log('SOCKET', process.env.SOCKET_URL);
   }, []);
 
   const navigate = (screenName) => {
@@ -31,8 +33,8 @@ const MainMenu = () => {
       </div>
       <Button
         className={styles.button}
-        onClick={() => navigate(SCREEN_NAME.CHANGE_NAME)}
-      >Change name</Button>
+        onClick={() => navigate(SCREEN_NAME.RENAME)}
+      >Rename</Button>
       <Button
         className={styles.button}
         onClick={() => navigate(SCREEN_NAME.ABOUT)}
