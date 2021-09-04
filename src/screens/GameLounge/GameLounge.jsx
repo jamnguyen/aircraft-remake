@@ -1,38 +1,49 @@
 import React from 'react';
-import cx from 'classnames';
-import { FaArrowLeft, FaPlaneDeparture } from 'react-icons/fa';
-import { Button, Modal } from '../../components';
+import { FaArrowLeft, FaPlaneDeparture, FaRegFrown, FaRegMehRollingEyes } from 'react-icons/fa';
+import { Button, Modal, Spinner } from '../../components';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
 import { useDispatch } from '../../utils/hooks';
 import styles from './GameLounge.module.scss';
+import UserStatus from '../../constants/user-statuses';
+import { useGame } from '../../context/game-provider';
 
 const mockUsers = [
-  { id: '1', username: 'Jam Nguyen' },
-  { id: '2', username: 'Aki Huynh' },
-  { id: '3', username: 'Emma Stone Emma Stone Emma Stone Emma Stone' },
-  { id: '4', username: 'Aragaki Yui' },
+  // { id: '1', username: 'Jam Nguyen' },
+  // { id: '2', username: 'Aki Huynh' },
+  // { id: '3', username: 'Emma Stone Emma Stone Emma Stone Emma Stone' },
+  // { id: '4', username: 'Aragaki Yui' },
 ];
 
 const GameLounge = () => {
-  const [ shownModal, setShowModal ] = React.useState(false);
-  const [ opponent, setOpponent ] = React.useState();
+  const {
+    availables: players,
+    error,
+    isHandshaking,
+    updateUser,
+    getUserId,
+  } = useGame();
+  const [shownModal, setShowModal] = React.useState(false);
+  const [opponent, setOpponent] = React.useState();
   const dispatch = useDispatch();
+
+  const availables = players.filter(user => user.id !== getUserId());
 
   React.useEffect(() => {
     setLoading(dispatch, false);
+    updateUser({ status: UserStatus.AVAILABLE });
   }, []);
 
   const onBack = () => {
     setScreen(dispatch, SCREEN_NAME.MAIN_MENU);
     setLoading(dispatch, true);
-  }
+  };
 
   const onOpponentSelect = (selectedUsername) => {
     setOpponent(selectedUsername);
     setShowModal(true);
-  }
+  };
 
-  const getModalContent = () => {
+  const renderModalContent = () => {
     // @TODO: Get modal corresponding
     // Acceptance modal, Rejected modal, Timeout, Challenging modal
 
@@ -67,29 +78,54 @@ const GameLounge = () => {
         </Button>
       </div>
     );
-  }
+  };
+
+  const renderList = () => {
+    if (error) {
+      return (
+        <li className={styles.error}>
+          {error.message}
+          <FaRegMehRollingEyes className={styles.iconSad} />
+        </li>
+      );
+    } else if (isHandshaking) {
+      return (
+        <li className={styles.loader}>
+          <Spinner text="Connecting to server..." />
+        </li>
+      );
+    } else if (availables.length <= 0) {
+      return (
+        <li className={styles.empty}>
+          No available player. <FaRegFrown className={styles.iconSad} />
+        </li>
+      );
+    } else {
+      return availables.map((item) => (
+        <li
+          tabIndex={shownModal ? '-1' : '0'}
+          key={`user-${item.id}`}
+          onClick={() => onOpponentSelect(item.username)}
+        >
+          <span>{item.username}</span>
+          <FaPlaneDeparture className={styles.icon} />
+        </li>
+      ));
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <h1>Available Player</h1>
+      <h1>Lounge</h1>
       <ol className={styles.list}>
-        {mockUsers.map((item) => (
-          <li
-            tabIndex={shownModal ? '-1' : '0'}
-            key={`user-${item.id}`}
-            onClick={() => onOpponentSelect(item.username)}
-          >
-            <span>{item.username}</span>
-            <FaPlaneDeparture className={styles.icon} />
-          </li>
-        ))}
+        {renderList()}
       </ol>
       <Button
         className={styles.button}
         onClick={onBack}
       ><FaArrowLeft className={styles.icon} />Back</Button>
       <Modal visible={shownModal}>
-        {getModalContent()}
+        {renderModalContent()}
       </Modal>
     </div>
   );

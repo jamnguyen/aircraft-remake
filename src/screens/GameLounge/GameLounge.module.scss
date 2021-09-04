@@ -2,15 +2,17 @@
 @import 'styles/variables';
 
 .container {
-  @include full-page(linear-gradient(to bottom left, $darksky, $darkblue));
+  @include full-page(linear-gradient(to top right, $smokewhite, $darkgray));
   justify-content: flex-start;
   padding: 6rem 0;
 
   h1 {
+    align-self: flex-start;
     border-bottom: 0.4rem solid $white;
     color: $white;
     font-size: 4rem;
     margin-bottom: 4rem;
+    margin-left: 6rem;
     text-transform: uppercase;
   }
 
@@ -23,8 +25,9 @@
 
     li {
       align-items: center;
-      background-color: $white;
+      background-color: rgba($white, 0.4);
       border-radius: 0.8rem;
+      border: 0.2rem solid rgba($darkgray, 0.6);
       color: $darkblue;
       cursor: pointer;
       display: flex;
@@ -35,6 +38,32 @@
       text-transform: uppercase;
       transition: 0.2s all ease;
       width: 100%;
+
+      &.error,
+      &.empty,
+      &.loader {
+        background-color: transparent;
+        border: none;
+        display: block;
+        font-family: $font-text;
+        font-weight: $semi-bold;
+        padding: 0;
+
+        .iconSad {
+          font-size: 3.2rem;
+          margin-left: 0.8rem;
+          transform: translateY(0.6rem);
+        }
+      }
+
+      &.error {
+        color: $red;
+        text-transform: none;
+      }
+
+      &.loader * {
+        color: $darkblue !important;
+      }
 
       &:not(:last-child) {
         margin-bottom: 2rem;
@@ -50,13 +79,13 @@
         transition: 0.2s all ease;
 
         * {
-          color: $darksky;
+          color: $darkblue;
         }
       }
 
       &:hover,
       &:focus {
-        color: $darksky;
+        background-color: rgba($yellow, 1);
         outline: none;
 
         .icon {
@@ -75,7 +104,7 @@
 
     &,
     * {
-      color: $white;
+      color: $darkgray;
     }
 
     .icon {
@@ -88,7 +117,7 @@
     &:focus {
       &,
       * {
-        color: $sky;
+        color: $silver;
       }
     }
   }

@@ -1,7 +1,6 @@
 import React from 'react';
-import { initialState as authInitState, AuthReducer } from './auth-manager';
-import { initialState as gameInitState, GameReducer } from './game';
-import { initialState as screenInitState, ScreenReducer } from './screen-manager';
+import { initialState as authInitState, AuthReducer } from '../reducers/auth-manager';
+import { initialState as screenInitState, ScreenReducer } from '../reducers/screen-manager';
 
 const combineReducers = (reducerObj) => (state, action) =>
   Object.keys(reducerObj).reduce(
@@ -14,7 +13,6 @@ const combineReducers = (reducerObj) => (state, action) =>
 
 const initialState = {
   auth: authInitState,
-  game: gameInitState,
   screen: screenInitState,
 }
 
@@ -23,7 +21,6 @@ export const StoreContext = React.createContext();
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
-  game: GameReducer,
   screen: ScreenReducer,
 });
 

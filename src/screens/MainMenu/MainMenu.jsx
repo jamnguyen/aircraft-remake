@@ -1,23 +1,25 @@
 import React from 'react';
 import { Button } from '../../components';
+import UserStatus from '../../constants/user-statuses';
+import { useGame } from '../../context/game-provider';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
 import { useDispatch, useAuth } from '../../utils/hooks';
 import styles from './MainMenu.module.scss';
 
 const MainMenu = () => {
   const { username } = useAuth();
+  const { updateUser } = useGame();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     setLoading(dispatch, false);
-
-    console.log('SOCKET', process.env.SOCKET_URL);
+    updateUser({ status: UserStatus.PENDING });
   }, []);
 
   const navigate = (screenName) => {
     setLoading(dispatch, true);
     setScreen(dispatch, screenName);
-  }
+  };
 
   return (
     <div className={styles.container}>

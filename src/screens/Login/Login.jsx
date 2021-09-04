@@ -1,14 +1,16 @@
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import * as AuthAPI from '../../api/auth';
-import { Button, Input } from '../../components';
-import { updateUser } from '../../reducers/auth-manager';
+import { Button, Input, Spinner } from '../../components';
+import { useGame } from '../../context/game-provider';
+import { setUsername } from '../../reducers/auth-manager';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
 import { useAuth, useDispatch, useScreenManager } from '../../utils/hooks';
 import styles from './Login.module.scss';
 
 const Login = () => {
-  const { id, username } = useAuth();
+  const { username } = useAuth();
+  const { connect, updateUser } = useGame();
   const { screen } = useScreenManager();
   const dispatch = useDispatch();
   const [name, setName] = React.useState(username);
@@ -22,30 +24,48 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const apiFn = screen === SCREEN_NAME.LOGIN ? onLogin : onRename;
     setIsFetching(true);
-    setError(null);
-    apiFn().then(data => {
-      updateUser(dispatch, data.data.user);
-      setLoading(dispatch, true);
-      setScreen(dispatch, SCREEN_NAME.MAIN_MENU);
+    AuthAPI.verifyUsername(name).then(() => {
+      setUsername(dispatch, name);
+
+      if (screen === SCREEN_NAME.LOGIN) {
+        connect(name, next);
+      } else {
+        updateUser({ username: name });
+        next();
+      }
     }, error => {
-      setError(error);
-    }).finally(() => {
       setIsFetching(false);
+      setError(error);
     });
   };
 
-  const onLogin = () => {
-    return AuthAPI.logIn(name);
-  };
-
-  const onRename = () => {
-    return AuthAPI.updateUser(id, { username: name });
+  const next = () => {
+    setLoading(dispatch, true);
+    setScreen(dispatch, SCREEN_NAME.MAIN_MENU);
   };
 
   const onNameChange = (e) => {
+    setError(null);
     setName(e.target.value);
+  };
+
+  const renderStatus = () => {
+    if (isFetching) {
+      return <Spinner className={styles.loader} />;
+    } else if (error) {
+      return (
+        <div className={styles.error}>{error.message}</div>
+      );
+    }
+    
+    return (
+      <Button
+        className={styles.button}
+        disabled={!name}
+        type="submit"
+      >Done <FaArrowRight className={styles.icon} /></Button>
+    );
   }
 
   return (
@@ -58,15 +78,7 @@ const Login = () => {
         onChange={onNameChange}
         disabled={isFetching}
       />
-      {isFetching ? (
-        <span>Loading...</span>
-      ) : (
-        <Button
-          className={styles.button}
-          disabled={!name}
-          type="submit"
-        >Done <FaArrowRight className={styles.icon} /></Button>
-      )}
+      {renderStatus()}
     </form>
   );
 };

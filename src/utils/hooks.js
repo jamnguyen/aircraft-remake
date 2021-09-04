@@ -1,4 +1,4 @@
-import { useStore } from "../reducers/store-provider"
+import { useStore } from "../context/store-provider"
 
 // SCREENS
 export const useDispatch = () => {
@@ -11,13 +11,6 @@ export const useScreenManager = () => {
 
   return store.screen;
 };
-
-// GAME
-export const useGame = () => {
-  const [store] = useStore();
-
-  return store.game;
-}
 
 // AUTH
 export const useAuth = () => {
