@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { FaArrowLeft, FaPlaneDeparture, FaRegFrown, FaRegMehRollingEyes } from 'react-icons/fa';
 import { Button, Modal, Spinner } from '../../components';
 import { SCREEN_NAME, setLoading, setScreen } from '../../reducers/screen-manager';
@@ -21,9 +22,13 @@ const GameLounge = () => {
     isHandshaking,
     updateUser,
     getUserId,
+    request,
+    requestBattle,
+    cancelRequest,
+    acceptBattle,
+    rejectBattle,
   } = useGame();
   const [shownModal, setShowModal] = React.useState(false);
-  const [opponent, setOpponent] = React.useState();
   const dispatch = useDispatch();
 
   const availables = players.filter(user => user.id !== getUserId());
@@ -33,51 +38,101 @@ const GameLounge = () => {
     updateUser({ status: UserStatus.AVAILABLE });
   }, []);
 
+  React.useEffect(() => {
+    if (request) {
+      setShowModal(true);
+    }
+  }, [request]);
+
   const onBack = () => {
     setScreen(dispatch, SCREEN_NAME.MAIN_MENU);
     setLoading(dispatch, true);
   };
 
-  const onOpponentSelect = (selectedUsername) => {
-    setOpponent(selectedUsername);
-    setShowModal(true);
+  const onOpponentSelect = (selectedPlayer) => {
+    if (selectedPlayer.status !== UserStatus.AVAILABLE) {
+      return;
+    }
+
+    // Request player for a battle
+    requestBattle(selectedPlayer);
   };
 
   const renderModalContent = () => {
-    // @TODO: Get modal corresponding
-    // Acceptance modal, Rejected modal, Timeout, Challenging modal
+    if (!request) {
+      return;
+    }
 
-    // Acceptance modal
-    // return (
-    //   <div className={styles.modalContent}>
-    //     <h2>Jam Nguyen challenges you for a game!</h2>
-    //     <Button
-    //       className={cx(styles.modalBtn, styles.safe)}
-    //       onClick={() => setShowModal(false)}
-    //     >
-    //       Accept
-    //     </Button>
-    //     <Button
-    //       className={styles.modalBtn}
-    //       onClick={() => setShowModal(false)}
-    //     >
-    //       Reject
-    //     </Button>
-    //   </div>
-    // );
+    const { opponent, message } = request;
 
-    // Challenging modal
-    return (
-      <div className={styles.modalContent}>
-        <h2>Challenging {opponent}...</h2>
-        <Button
-          className={styles.modalBtn}
-          onClick={() => setShowModal(false)}
-        >
-          Cancel
-        </Button>
-      </div>
-    );
+    if (!opponent) {
+      return (
+        <div className={styles.modalContent}>
+          <h2>{message}</h2>
+          <Button
+            className={styles.modalBtn}
+            onClick={() => setShowModal(false)}
+          >
+            Ok fine
+          </Button>
+        </div>
+      );
+    }
+
+    if (opponent.status === UserStatus.AVAILABLE) {
+      return (
+        <div className={styles.modalContent}>
+          <h2>{message}</h2>
+          <Button
+            className={styles.modalBtn}
+            onClick={() => {
+              cancelRequest();
+              setShowModal(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      );
+    }
+
+    if (!opponent && message) {
+      return (
+        <div className={styles.modalContent}>
+          <h2>{message}</h2>
+          <Button
+            className={styles.modalBtn}
+            onClick={() => setShowModal(false)}
+          >
+            Ok fine
+          </Button>
+        </div>
+      );
+    }
+
+    if (opponent.status === UserStatus.BATTLE_REQUEST) {
+      return (
+        <div className={styles.modalContent}>
+          <h2>{message}</h2>
+          <Button
+            className={cx(styles.modalBtn, styles.safe)}
+            onClick={acceptBattle}
+          >
+            Accept
+          </Button>
+          <Button
+            className={styles.modalBtn}
+            onClick={rejectBattle}
+            onClick={() => {
+              rejectBattle();
+              setShowModal(false);
+            }}
+          >
+            Reject
+          </Button>
+        </div>
+      );
+    }
   };
 
   const renderList = () => {
@@ -105,7 +160,8 @@ const GameLounge = () => {
         <li
           tabIndex={shownModal ? '-1' : '0'}
           key={`user-${item.id}`}
-          onClick={() => onOpponentSelect(item.username)}
+          onClick={() => onOpponentSelect(item)}
+          className={cx({ [styles.disabled]: item.status !== UserStatus.AVAILABLE })}
         >
           <span>{item.username}</span>
           <FaPlaneDeparture className={styles.icon} />

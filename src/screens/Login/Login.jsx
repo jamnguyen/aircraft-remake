@@ -78,7 +78,9 @@ const Login = () => {
         onChange={onNameChange}
         disabled={isFetching}
       />
-      {renderStatus()}
+      <div className={styles.statusWrapper}>
+        {renderStatus()}
+      </div>
     </form>
   );
 };

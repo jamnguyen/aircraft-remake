@@ -7,11 +7,11 @@ const GameContext = React.createContext();
 
 export const GameProvider = ({ children }) => {
   const [availables, setAvailables] = React.useState([]);
+  const [request, setRequest] = React.useState(null);
   const [isHandshaking, setIsHandshaking] = React.useState(true);
   const [error, setError] = React.useState(null);
   const socket = React.useRef();
 
-  // Setup Socket io here
   const connect = (username, onSuccess, onError) => {
     setAvailables([]);
     setIsHandshaking(true);
@@ -24,6 +24,10 @@ export const GameProvider = ({ children }) => {
       }
     );
     
+    // ---------------------------------------------
+    // RECEIVING MESSAGES
+    // INITIALIZE
+    // ---------------------------------------------
     socket.current.on(IOMessage.CONNECTED, () => {
       setIsHandshaking(false);
       setError(null);
@@ -43,11 +47,34 @@ export const GameProvider = ({ children }) => {
       setError({ message: "Connect failed, please try again later." });
     });
 
+    // ---------------------------------------------
+    // GAME LOUNGE
+    // ---------------------------------------------
     socket.current.on(IOMessage.AVAILABLE_LIST, (data) => {
       setAvailables(data || []);
     });
+  
+    socket.current.on(IOMessage.BATTLE_REQUEST, (payload) => {
+      setRequest(payload);
+    });
+
+    socket.current.on(IOMessage.BATTLE_REQUEST_CANCEL, (payload) => {
+      setRequest(payload);
+    });
+
+    socket.current.on(IOMessage.BATTLE_ACCEPTED, (payload) => {
+      // @TODO: MOVE TO BOARD SETUP
+    });
+
+    socket.current.on(IOMessage.BATTLE_REJECTED, (payload) => {
+      setRequest(payload);
+    });
   };
 
+  // -----------------------------------------------
+  // EMITTING MESSAGES
+  // GAME LOUNGE
+  // -----------------------------------------------
   const updateUser = (payload) => {
     socket.current?.emit(IOMessage.USER_CHANGE, payload);
   }
@@ -56,13 +83,40 @@ export const GameProvider = ({ children }) => {
     return socket.current?.id;
   };
 
+  const requestBattle = (player) => {
+    setRequest({
+      message: `Waiting ${player.username} to accept...`,
+      opponent: player
+    });
+    socket.current?.emit(IOMessage.BATTLE_REQUEST, player.id);
+  }
+
+  const cancelRequest = () => {
+    socket.current?.emit(IOMessage.BATTLE_REQUEST_CANCEL, request?.opponent.id);
+    setRequest(null);
+  }
+
+  const acceptBattle = () => {
+    socket.current?.emit(IOMessage.BATTLE_ACCEPTED, request?.opponent.id);
+  }
+
+  const rejectBattle = () => {
+    socket.current?.emit(IOMessage.BATTLE_REJECTED, request?.opponent.id);
+  }
+
   const value = {
     availables,
     isHandshaking,
     error,
+    request,
     connect,
     updateUser,
     getUserId,
+    setRequest,
+    requestBattle,
+    cancelRequest,
+    acceptBattle,
+    rejectBattle,
   };
 
   return (

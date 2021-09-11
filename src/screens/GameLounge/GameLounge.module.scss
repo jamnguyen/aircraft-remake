@@ -39,6 +39,11 @@
       transition: 0.2s all ease;
       width: 100%;
 
+      &.disabled {
+        background-color: $darkgray;
+        cursor: default;
+      }
+
       &.error,
       &.empty,
       &.loader {
@@ -85,11 +90,13 @@
 
       &:hover,
       &:focus {
-        background-color: rgba($yellow, 1);
-        outline: none;
+        &:not(.disabled) {
+          background-color: rgba($yellow, 1);
+          outline: none;
 
-        .icon {
-          opacity: 1;
+          .icon {
+            opacity: 1;
+          }
         }
       }
     }
