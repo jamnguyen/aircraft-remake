@@ -1,0 +1,38 @@
+@import 'styles/mixin';
+@import 'styles/variables';
+
+.container {
+  @include full-page(linear-gradient(to bottom left, $blue, $smokewhite));
+  justify-content: flex-start;
+  padding: 6rem 0;
+
+  h1 {
+    border-bottom: 0.4rem solid $white;
+    border-top: 0.4rem solid $white;
+    color: $white;
+    font-size: 4rem;
+    letter-spacing: 0.4rem;
+    padding: 0.4rem 0;
+    text-transform: uppercase;
+  }
+
+  .opponent {
+    background-color: $red;
+    border-radius: 0.4rem;
+    color: $smokewhite;
+    font-size: 1.8rem;
+    font-weight: $bold;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+  }
+
+  .board {
+    background-color: rgba($darkgreen, 0.1);
+    margin-top: 4rem;
+
+    table tr td {
+      border-color: $white;
+    }
+  }
+}

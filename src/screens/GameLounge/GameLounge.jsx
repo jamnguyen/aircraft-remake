@@ -8,13 +8,6 @@ import styles from './GameLounge.module.scss';
 import UserStatus from '../../constants/user-statuses';
 import { useGame } from '../../context/game-provider';
 
-const mockUsers = [
-  // { id: '1', username: 'Jam Nguyen' },
-  // { id: '2', username: 'Aki Huynh' },
-  // { id: '3', username: 'Emma Stone Emma Stone Emma Stone Emma Stone' },
-  // { id: '4', username: 'Aragaki Yui' },
-];
-
 const GameLounge = () => {
   const {
     availables: players,

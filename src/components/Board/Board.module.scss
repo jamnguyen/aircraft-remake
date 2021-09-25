@@ -1,0 +1,24 @@
+@import 'styles/variables';
+
+.container {
+  background-color: $white;
+  height: 90vw;
+  position: relative;
+  width: 94vw;
+
+  table {
+    border-collapse: collapse;
+    height: 100%;
+    width: 100%;
+
+    tr {
+      height: 10%;
+      width: 100%;
+
+      td {
+        border: 1px solid $darkgray;
+        width: 10%;
+      }
+    }
+  }
+}

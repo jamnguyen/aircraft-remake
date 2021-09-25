@@ -12,11 +12,12 @@ export const SCREEN_NAME = {
 
   // IN GAME
   GAME_LOUNGE: 'GAME_LOUNGE',
+  BOARD_SETUP: 'BOARD_SETUP',
 }
 
 export const initialState = {
   isLoading: false,
-  screen: SCREEN_NAME.LOGIN,
+  screen: SCREEN_NAME.BOARD_SETUP,
 };
 
 export const setScreen = (dispatch, screenName, delay = SCREEN_TRANSITION_DELAY) => {

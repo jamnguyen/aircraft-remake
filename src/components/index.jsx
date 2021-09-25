@@ -1,3 +1,4 @@
+export { default as Board } from './Board/Board';
 export { default as Button } from './Button/Button';
 export { default as Game } from './Game/Game';
 export { default as Input } from './Input/Input';

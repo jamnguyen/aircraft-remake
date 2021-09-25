@@ -8,6 +8,10 @@ const GameContext = React.createContext();
 export const GameProvider = ({ children }) => {
   const [availables, setAvailables] = React.useState([]);
   const [request, setRequest] = React.useState(null);
+  const [opponent, setOpponent] = React.useState({
+    id: 'abcde',
+    username: 'Emma Stone',
+  })
   const [isHandshaking, setIsHandshaking] = React.useState(true);
   const [error, setError] = React.useState(null);
   const socket = React.useRef();
@@ -109,6 +113,7 @@ export const GameProvider = ({ children }) => {
     isHandshaking,
     error,
     request,
+    opponent,
     connect,
     updateUser,
     getUserId,

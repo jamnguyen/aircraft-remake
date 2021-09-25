@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameProvider } from '../../context/game-provider';
 import { SCREEN_NAME } from '../../reducers/screen-manager';
-import { About, GameLounge, Login, MainMenu, Splash } from '../../screens';
+import { About, BoardSetup, GameLounge, Login, MainMenu, Splash } from '../../screens';
 import { useScreenManager } from '../../utils/hooks';
 
 const Game = () => {
@@ -20,6 +20,8 @@ const Game = () => {
         return <About />;
       case SCREEN_NAME.GAME_LOUNGE:
         return <GameLounge />;
+      case SCREEN_NAME.BOARD_SETUP:
+        return <BoardSetup />;
       default:
         return null;
     }
